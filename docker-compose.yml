@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  mysql:
+    container_name: mysql_by_local
+    image: mysql:8.0.30
+    volumes:
+      - .db/conf.d:/etc/mysql/conf.d           # 커스텀 설정 파일
+      - .db/initdb.d:/docker-entrypoint-initdb.d # 초기화 SQL 파일 (알파벳순으로 수행)
+    ports:
+      - "3306:3306"
+    # 재시작 여부 : restart: always
+    environment:
+      - MYSQL_DATABASE=local
+      - MYSQL_USER    = local_user
+      - MYSQL_PASSWORD= local_password
+      - MYSQL_ROOT_PASSWORD= local_root_password
+      - TZ=Asia/Seoul
