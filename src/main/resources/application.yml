@@ -1,6 +1,14 @@
+server:
+  port: 8081
+
 spring:
   datasource:
-    url: jdbc:h2:mem:batch-h2
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    url: jdbc:mysql://127.0.0.1:3306/local?serverTimezone=Asia/Seoul
+    username: local_user
+    password: local123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:                             # Spring Boot2 부터 default DBCP는 hikariCP
+      maximum-pool-size: 20             # 최대 DB 커넥션 개수
+  batch:
+    jdbc:
+      initialize-schema: always # 초기 스키마 생성 여부
