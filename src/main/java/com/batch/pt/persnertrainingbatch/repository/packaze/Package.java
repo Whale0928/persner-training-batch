@@ -1,5 +1,6 @@
-package com.batch.pt.persnertrainingbatch.repository;
+package com.batch.pt.persnertrainingbatch.repository.packaze;
 
+import com.batch.pt.persnertrainingbatch.repository.BaseEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +19,7 @@ import javax.persistence.Table;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Package {
+public class Package extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer packageSeq;

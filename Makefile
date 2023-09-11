@@ -4,4 +4,4 @@ db-up:
 
 # -v: volume 삭제
 db-down:
-	docker-compose down -vm
+	docker-compose  down -vm
