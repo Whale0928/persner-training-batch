@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,7 +23,6 @@ class PackageRepositoryTest {
 
     @Autowired
     private PackageRepository packageRepository;
-
 
     private static Package getBuild(String name, int count, int period) {
         return Package.builder()
@@ -61,5 +61,39 @@ class PackageRepositoryTest {
 
         // then
         assertEquals(1, list.size());
+    }
+
+    @Test
+    @DisplayName("package 정보를 수정할 수 있다.")
+    void test_update() throws Exception {
+        // given
+        Package aPackage = getBuild("4개월 30회권", 30, 120);
+        packageRepository.save(aPackage);
+
+        // when
+        // 40회, 150일로 수정
+        int updateCount = packageRepository.updateCountAndPeriod(aPackage.getPackageSeq(), 40, 150);
+        packageRepository.flush();
+        Package updatePackage = packageRepository.findById(aPackage.getPackageSeq()).orElse(null);
+
+        // then
+        assertEquals(1, updateCount);
+        assertEquals(40, updatePackage.getCount());
+        assertEquals(150, updatePackage.getPeriod());
+    }
+
+    @Test
+    @DisplayName("package 정보를 삭제할 수 있다.")
+    void test_delete() throws Exception {
+        // given
+        Package aPackage = getBuild("4개월 30회권", 30, 120);
+        packageRepository.save(aPackage);
+
+        // when
+        packageRepository.delete(aPackage);
+        Package deletePackage = packageRepository.findById(aPackage.getPackageSeq()).orElse(null);
+
+        // then
+        assertEquals(null, deletePackage);
     }
 }
