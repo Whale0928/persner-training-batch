@@ -6,6 +6,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,6 +26,7 @@ public class PassEntity extends BaseEntity {
     private Integer packageSeq;
     private String userId;
 
+    @Enumerated(EnumType.STRING)
     private PassStatus status;
     private Integer remainingCount;
 
